@@ -45,18 +45,18 @@ class MeshLineSegments {
       this.startPositions,
       3
     )
-    this.geometry.addAttribute('startPosition', this.startPositionsAttribute)
+    this.geometry.setAttribute('startPosition', this.startPositionsAttribute)
 
     this.endPositions = new Float32Array(this.numVertices * 3)
     this.endPositionsAttribute = new THREE.BufferAttribute(
       this.endPositions,
       3
     )
-    this.geometry.addAttribute('endPosition', this.endPositionsAttribute)
+    this.geometry.setAttribute('endPosition', this.endPositionsAttribute)
 
     this.positions = new Float32Array(source.length * 3)
     this.positionsAttribute = new THREE.BufferAttribute(this.positions, 3)
-    this.geometry.addAttribute('position', this.positionsAttribute) // for boundary computing
+    this.geometry.setAttribute('position', this.positionsAttribute) // for boundary computing
 
     // Side and Edge offsets
     this.sides = new Float32Array(this.numVertices)
@@ -64,14 +64,14 @@ class MeshLineSegments {
       this.sides[i] = (i % 2) * 2 - 1
     }
     this.sidesAttribute = new THREE.BufferAttribute(this.sides, 1)
-    this.geometry.addAttribute('side', this.sidesAttribute)
+    this.geometry.setAttribute('side', this.sidesAttribute)
 
     this.edges = new Float32Array(this.numVertices)
     for (let i = 0; i < this.numVertices; i++) {
       this.edges[i] = (Math.floor(i / 2) % 2) * 2 - 1
     }
     this.edgesAttribute = new THREE.BufferAttribute(this.edges, 1)
-    this.geometry.addAttribute('edge', this.edgesAttribute)
+    this.geometry.setAttribute('edge', this.edgesAttribute)
   }
 
   copyPosition (arr, index, pos) {
@@ -102,13 +102,8 @@ class MeshLineSegments {
       this.copyPosition(this.positions, i * 2 + 1, end)
     }
 
-    this.startPositionsAttribute.setArray(this.startPositions)
     this.startPositionsAttribute.needsUpdate = true
-
-    this.endPositionsAttribute.setArray(this.endPositions)
     this.endPositionsAttribute.needsUpdate = true
-
-    this.positionsAttribute.setArray(this.positions)
 
     this.geometry.computeBoundingSphere()
   }
