@@ -59,12 +59,18 @@ class Verreciel {
     this.numClicks = 0
     this.scene = new THREE.Scene()
     this.scene.background = new THREE.Color(0, 0, 0)
-    this.renderer = new THREE.WebGLRenderer({ antialias: true })
+    this.canvas = document.createElement('canvas')
+    this.renderer = new THREE.WebGLRenderer({
+      canvas: this.canvas,
+      context: this.canvas.getContext('webgl2'),
+      antialias: true,
+      alpha: false,
+    })
     // this.renderer.sortObjects = false;
     this.renderer.setPixelRatio(window.devicePixelRatio)
     this.renderer.setSize(0, 0)
 
-    this.element.appendChild(this.renderer.domElement)
+    this.element.appendChild(this.canvas)
     this.lastMousePosition = new THREE.Vector2()
     this.mouseMoved = false
     this.waitingForMouseUp = false
